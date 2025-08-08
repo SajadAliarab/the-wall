@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
 
         // Prohibits: db:wipe, migrate:fresh, migrate:refresh, and migrate:reset
         DB::prohibitDestructiveCommands(app()->isProduction());
+
+        // Use immutable dates.
+        Date::use(CarbonImmutable::class);
     }
 
     /**
