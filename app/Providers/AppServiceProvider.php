@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
 
         // No mass assignment protection at all.
         Model::unguard();
+
+        Model::automaticallyEagerLoadRelationships();
     }
 
     /**
