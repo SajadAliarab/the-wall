@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -25,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
 
         // Use immutable dates.
         Date::use(CarbonImmutable::class);
+
+        // Prevent accessing attributes that were not loaded from the database. Instead of returning null, an exception will be thrown
+        Model::preventAccessingMissingAttributes();
+
+        // No mass assignment protection at all.
+        Model::unguard();
     }
 
     /**
