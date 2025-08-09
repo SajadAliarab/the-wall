@@ -11,6 +11,7 @@
         "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
+        "driftingly/rector-laravel": "^2.0",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^3.0",
         "laravel/pail": "^1.2.2",
@@ -63,6 +64,9 @@
         ],
         "analyse": [
             "@php ./vendor/bin/phpstan analyse --memory-limit=2G"
+        ],
+        "analyse-rector": [
+            "@php ./vendor/bin/rector"
         ]
     },
     "extra": {
