@@ -46,6 +46,5 @@ class AppServiceProvider extends ServiceProvider
         // Enforce morph mapping
         Relation::enforceMorphMap(MorphMapEnum::options());
 
-
     }
 }
