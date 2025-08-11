@@ -8,6 +8,7 @@
       when: always
     - if: '$CI_COMMIT_BRANCH == "develop"'
       when: always
+
   before_script:
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts --ignore-platform-reqs
     - cp .env.example .env
