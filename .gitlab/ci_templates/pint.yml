@@ -1,0 +1,14 @@
+.pint:
+  stage: lint
+  image: lorisleiva/laravel-docker:8.4
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "production"'
+      when: never
+    - if: '$CI_MERGE_REQUEST_IID'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+  before_script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts --ignore-platform-reqs
+  script:
+    - ./vendor/bin/pint -v --ansi --test

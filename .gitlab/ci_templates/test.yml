@@ -1,0 +1,42 @@
+.test:
+  stage: test
+  image: lorisleiva/laravel-docker:8.4
+
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "production"'
+      when: never
+    - if: '$CI_MERGE_REQUEST_IID'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: always
+
+  services:
+    - name: postgres:17.4-alpine
+      alias: postgres
+
+  variables:
+    POSTGRES_USER: test
+    POSTGRES_PASSWORD: test
+    POSTGRES_DB: test
+    PGPASSWORD: test
+
+  before_script:
+    - set -o allexport && source .env.testing && set +o allexport
+
+    - apk add --no-cache postgresql-client
+    - |
+      until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USERNAME"; do
+        echo "→ waiting for postgres…"
+        sleep 1
+      done
+    - |
+      psql -h "$DB_HOST" -U "$DB_USERNAME" -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_DATABASE'" \
+        | grep -q 1 \
+        || psql -h "$DB_HOST" -U "$DB_USERNAME" -c "CREATE DATABASE \"$DB_DATABASE\";"
+
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts --ignore-platform-reqs
+    - npm install
+    - npm run build
+
+  script:
+    - php artisan test

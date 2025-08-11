@@ -1,0 +1,26 @@
+include:
+  - local: '.gitlab/ci_templates/pint.yml'
+  - local: '.gitlab/ci_templates/larastan.yml'
+  - local: '.gitlab/ci_templates/pest-type-coverage.yml'
+  - local: '.gitlab/ci_templates/rector.yml'
+  - local: '.gitlab/ci_templates/test.yml'
+
+stages:
+  - lint
+  - static_analyse
+  - test
+
+pint:
+  extends: .pint
+
+larastan:
+  extends: .larastan
+
+pest-type-coverage:
+  extends: .pest-type-coverage
+
+rector:
+  extends: .rector
+
+test:
+  extends: .test
