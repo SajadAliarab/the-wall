@@ -27,6 +27,7 @@ class User extends Authenticatable implements FilamentUser
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+
     use Notifiable;
 
     /**
@@ -66,8 +67,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function isAdmin(): bool
     {
-        return $this->is_admin
-            && $this->hasVerifiedEmail();
+        return $this->is_admin;
     }
 
     public function canAccessPanel(Panel $panel): bool
