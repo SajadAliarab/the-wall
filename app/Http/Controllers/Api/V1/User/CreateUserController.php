@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Actions\Api\V1\Users\CreateUserAction;
+use App\Actions\Api\V1\User\CreateUserAction;
 use App\Http\Controllers\Api\ApiBaseController;
 use App\Http\Requests\Api\V1\User\CreateUserRequest;
 use App\Http\Resources\UserResource;

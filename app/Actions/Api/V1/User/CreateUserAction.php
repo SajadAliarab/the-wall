@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Api\V1\Users;
+namespace App\Actions\Api\V1\User;
 
 use App\DataTransferObject\User\CreateUserDto;
 use App\Models\User;
