@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -44,4 +46,16 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+function createUser(): User
+{
+    $name = 'Test User';
+    $email = 'test@test.com';
+    $password = 'password';
+
+    return User::factory()->create([
+        'name' => $name,
+        'email' => $email,
+        'password' => $password,
+    ]);
 }
