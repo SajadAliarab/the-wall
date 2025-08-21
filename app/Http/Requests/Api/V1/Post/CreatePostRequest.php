@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\Api\V1\Post;
 
+use App\Contracts\Requests\HasDataTransferObjectInterface;
 use App\DataTransferObject\Post\CreatePostDto;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePostRequest extends FormRequest
+class CreatePostRequest extends FormRequest implements HasDataTransferObjectInterface
 {
     public function authorize(): bool
     {
