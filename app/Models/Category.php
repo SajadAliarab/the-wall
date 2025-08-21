@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
+    use \Illuminate\Database\Eloquent\Factories\HasFactory;
     use SoftDeletes;
 
     public function parent(): BelongsTo
@@ -31,7 +32,8 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    protected function scopeHasNoParent(Builder $query): void
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function hasNoParent(Builder $query): void
     {
         $query->where('parent_id', null);
     }
