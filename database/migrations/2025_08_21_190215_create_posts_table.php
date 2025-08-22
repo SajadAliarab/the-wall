@@ -13,8 +13,8 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->decimal('price', 10, 2);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
             $table->softDeletes();
         });

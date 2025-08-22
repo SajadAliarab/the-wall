@@ -9,12 +9,14 @@ class CreatePostAction
 {
     public function handle(CreatePostDto $dto): Post
     {
-        return Post::query()->create([
+        $post = Post::query()->create([
             'title' => $dto->title,
             'description' => $dto->description,
             'price' => $dto->price,
             'user_id' => auth()->user()->id,
             'category_id' => $dto->category_id,
         ]);
+
+        return $post->loadMissing('user', 'category');
     }
 }

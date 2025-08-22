@@ -6,14 +6,13 @@ use App\Actions\Api\V1\Post\CreatePostAction;
 use App\Http\Controllers\Api\ApiBaseController;
 use App\Http\Requests\Api\V1\Post\CreatePostRequest;
 use App\Http\Resources\PostResource;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreatePostController extends ApiBaseController
 {
     public function __invoke(CreatePostRequest $request, CreatePostAction $action)
     {
         $post = $action->handle($request->toDto());
-        $post->load('user', 'category');
 
         return response()->apiSuccess(
             data: new PostResource($post),

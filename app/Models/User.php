@@ -76,8 +76,9 @@ class User extends Authenticatable implements FilamentUser
         return $this->isAdmin();
     }
 
-    public function bookmarkedPost(): BelongsToMany
+    public function postBookmarks(): BelongsToMany
     {
-        return $this->belongsToMany(Post::class)->withTimestamps();
+        return $this->belongsToMany(Post::class)
+            ->withTimestamps();
     }
 }
