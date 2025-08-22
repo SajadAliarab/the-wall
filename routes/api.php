@@ -25,10 +25,10 @@ Route::name('api.')
                 Route::name('users.')
                     ->prefix('users')
                     ->group(function () {
-                        Route::post('create', CreateUserController::class)->name('create');
+                        Route::post('/', CreateUserController::class)->name('create');
 
                         Route::middleware('auth:sanctum')->group(function () {
-                            Route::put('update', UpdateUserController::class)->name('update');
+                            Route::put('/', UpdateUserController::class)->name('update');
                         });
                     });
 
@@ -36,7 +36,7 @@ Route::name('api.')
                 Route::name('categories.')
                     ->prefix('categories')
                     ->group(function () {
-                        Route::get('/categories', GetCategoryListController::class)->name('list');
+                        Route::get('/', GetCategoryListController::class)->name('list');
                     });
 
                 // Posts
@@ -44,7 +44,7 @@ Route::name('api.')
                     ->prefix('posts')
                     ->group(function () {
                         Route::middleware('auth:sanctum')->group(function () {
-                            Route::post('create', CreatePostController::class)->name('create');
+                            Route::post('/', CreatePostController::class)->name('create');
                         });
                     });
 
