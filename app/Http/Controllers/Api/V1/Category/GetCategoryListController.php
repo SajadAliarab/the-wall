@@ -15,8 +15,8 @@ class GetCategoryListController extends ApiBaseController
 
         return response()->apiSuccess(
             data: CategoryResource::collection($categories),
-            messages: "Category list found.",
-            responseCode:Response::HTTP_OK
+            messages: 'Category list found.',
+            responseCode: Response::HTTP_OK
         );
     }
 }
