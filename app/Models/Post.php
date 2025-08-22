@@ -37,7 +37,13 @@ class Post extends Model
 
     public function userBookmarks(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(User::class, 'user_post_bookmarks')
+            ->withTimestamps();
+    }
+
+    public function attachments(): BelongsToMany
+    {
+        return $this->belongsToMany(Attachment::class, 'post_attachments')
             ->withTimestamps();
     }
 }

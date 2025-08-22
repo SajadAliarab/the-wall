@@ -20,6 +20,8 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
             'description' => ['required'],
             'price' => ['required', 'numeric'],
             'category_id' => ['required', 'integer'],
+            'images' => ['required', 'array'],
+            'images.*' => ['required', 'exists:attachments,id'],
         ];
     }
 
@@ -30,6 +32,7 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
             description: $this->input('description'),
             price: $this->input('price'),
             category_id: $this->input('category_id'),
+            images: collect($this->input('images')),
         );
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Attachment\UploadAttachmentController;
 use App\Http\Controllers\Api\V1\Auth\CreateTokenController;
 use App\Http\Controllers\Api\V1\Category\GetCategoryListController;
 use App\Http\Controllers\Api\V1\Post\CreatePostController;
@@ -46,5 +47,15 @@ Route::name('api.')
                             Route::post('create', CreatePostController::class)->name('create');
                         });
                     });
+
+                // Attachments
+                Route::name('attachments.')
+                    ->prefix('attachments')
+                    ->group(function () {
+                        Route::middleware('auth:sanctum')->group(function () {
+                            Route::post('/', UploadAttachmentController::class)->name('upload');
+                        });
+                    });
+
             });
     });

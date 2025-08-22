@@ -2,6 +2,8 @@
 
 namespace App\DataTransferObject\Post;
 
+use Illuminate\Support\Collection;
+
 class CreatePostDto
 {
     public function __construct(
@@ -9,5 +11,6 @@ class CreatePostDto
         public string $description,
         public float $price,
         public int $category_id,
+        public Collection $images,
     ) {}
 }
