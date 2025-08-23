@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PostStatus;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float $price
  * @property int $user_id
  * @property int $category_id
+ * @property PostStatus $status
  * @property CarbonImmutable | null $created_at
  * @property CarbonImmutable | null $updated_at
  * @property CarbonImmutable | null $deleted_at
@@ -45,5 +47,12 @@ class Post extends Model
     {
         return $this->belongsToMany(Attachment::class, 'post_attachments')
             ->withTimestamps();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'status' => PostStatus::class,
+        ];
     }
 }
