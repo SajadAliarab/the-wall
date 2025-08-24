@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1\Post;
 
 use App\Actions\Api\V1\Post\GetPostAction;
 use App\Http\Controllers\Api\ApiBaseController;
-use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
 use Symfony\Component\HttpFoundation\Response;
 
