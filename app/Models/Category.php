@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -19,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     public function parent(): BelongsTo
@@ -31,7 +34,8 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    protected function scopeHasNoParent(Builder $query): void
+    #[Scope]
+    protected function hasNoParent(Builder $query): void
     {
         $query->where('parent_id', null);
     }

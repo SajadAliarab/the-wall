@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Attachment\UploadAttachmentController;
 use App\Http\Controllers\Api\V1\Auth\CreateTokenController;
 use App\Http\Controllers\Api\V1\Category\GetCategoryListController;
+use App\Http\Controllers\Api\V1\Post\CreatePostController;
 use App\Http\Controllers\Api\V1\User\CreateUserController;
 use App\Http\Controllers\Api\V1\User\UpdateUserController;
 
@@ -23,10 +25,10 @@ Route::name('api.')
                 Route::name('users.')
                     ->prefix('users')
                     ->group(function () {
-                        Route::post('create', CreateUserController::class)->name('create-user');
+                        Route::post('/', CreateUserController::class)->name('create');
 
                         Route::middleware('auth:sanctum')->group(function () {
-                            Route::put('update', UpdateUserController::class)->name('update');
+                            Route::put('/', UpdateUserController::class)->name('update');
                         });
                     });
 
@@ -34,7 +36,26 @@ Route::name('api.')
                 Route::name('categories.')
                     ->prefix('categories')
                     ->group(function () {
-                        Route::get('/categories', GetCategoryListController::class)->name('list');
+                        Route::get('/', GetCategoryListController::class)->name('list');
                     });
+
+                // Posts
+                Route::name('posts.')
+                    ->prefix('posts')
+                    ->group(function () {
+                        Route::middleware('auth:sanctum')->group(function () {
+                            Route::post('/', CreatePostController::class)->name('create');
+                        });
+                    });
+
+                // Attachments
+                Route::name('attachments.')
+                    ->prefix('attachments')
+                    ->group(function () {
+                        Route::middleware('auth:sanctum')->group(function () {
+                            Route::post('/', UploadAttachmentController::class)->name('upload');
+                        });
+                    });
+
             });
     });
