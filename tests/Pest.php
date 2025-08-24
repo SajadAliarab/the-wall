@@ -47,15 +47,7 @@ function something()
 {
     // ..
 }
-function createUser(): User
+function createUser(array $attributes = []): User
 {
-    $name = 'Test User';
-    $email = 'test@test.com';
-    $password = 'password';
-
-    return User::factory()->create([
-        'name' => $name,
-        'email' => $email,
-        'password' => $password,
-    ]);
+    return User::factory()->create($attributes);
 }
