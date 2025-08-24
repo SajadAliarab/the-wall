@@ -21,7 +21,7 @@ class UpdatePostAction
                 'description' => $dto->description,
                 'price' => $dto->price,
                 'category_id' => $dto->category_id,
-            ], fn (mixed $value):array => $value !== null);
+            ], fn (mixed $value): bool => $value !== null);
             if (filled($updateData)) {
                 $updateData['status'] = PostStatusEnum::Pending->value;
                 $post->update($updateData);
