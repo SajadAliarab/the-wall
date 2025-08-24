@@ -19,6 +19,5 @@ class CreatePostController extends ApiBaseController
             messages: 'Post created successfully.',
             responseCode: Response::HTTP_CREATED
         );
-
     }
 }

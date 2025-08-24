@@ -3,16 +3,16 @@
 namespace App\Actions\Api\V1\Post;
 
 use App\Models\Post;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class GetPostAction
+class GetPostListAction
 {
-    public function handle(): Collection
+    public function handle(): LengthAwarePaginator
     {
         return Post::query()
             ->approved()
             ->with(['category', 'user', 'attachments'])
-            ->orderBy('created_at', 'DESC')
-            ->get();
+            ->orderByDesc('id')
+            ->paginate();
     }
 }

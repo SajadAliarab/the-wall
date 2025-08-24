@@ -4,6 +4,7 @@ namespace App\Actions\Api\V1\Post;
 
 use App\DataTransferObject\Post\CreatePostDto;
 use App\Models\Post;
+use App\Models\States\Post\PostPendingStatus;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -20,6 +21,7 @@ class CreatePostAction
                 'price' => $dto->price,
                 'user_id' => auth()->user()->id,
                 'category_id' => $dto->category_id,
+                'status' => PostPendingStatus::class,
             ]);
 
             $post->attachments()->attach($dto->images);

@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\PostStatusEnum;
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Attachment;
 use App\Models\Post;
+use App\Models\States\Post\PostApprovedStatus;
+use App\Models\States\Post\PostPendingStatus;
+use App\Models\States\Post\PostRejectedStatus;
 use Filament\Forms;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
@@ -55,9 +57,9 @@ class PostResource extends Resource
                     ->disabled(),
                 Forms\Components\Select::make('status')
                     ->options([
-                        PostStatusEnum::Pending->value => 'Pending',
-                        PostStatusEnum::Approved->value => 'Approved',
-                        PostStatusEnum::Rejected->value => 'Rejected',
+                        PostPendingStatus::$name => 'Pending',
+                        PostApprovedStatus::$name => 'Approved',
+                        PostRejectedStatus::$name => 'Rejected',
                     ]),
             ]);
     }
@@ -87,21 +89,21 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (Post $record): string => match ($record->status->value) {
-                        PostStatusEnum::Pending->value => 'warning',
-                        PostStatusEnum::Approved->value => 'success',
-                        PostStatusEnum::Rejected->value => 'danger',
-                    })
+//                    ->color(fn (Post $record): string => match ($record->status) {
+//                        PostPendingStatus::$name => 'warning',
+//                        PostApprovedStatus::$name => 'success',
+//                        PostRejectedStatus::$name => 'danger',
+//                    })
                     ->searchable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                        PostStatusEnum::Pending->value => 'Pending',
-                        PostStatusEnum::Approved->value => 'Approved',
-                        PostStatusEnum::Rejected->value => 'Rejected',
+                        PostPendingStatus::$name => 'Pending',
+                        PostApprovedStatus::$name => 'Approved',
+                        PostRejectedStatus::$name => 'Rejected',
                     ])
-                    ->default(PostStatusEnum::Pending->value),
+                    ->default(PostPendingStatus::$name),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

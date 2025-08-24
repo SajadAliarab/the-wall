@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Spatie\ModelStates\Exceptions\CouldNotPerformTransition;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -33,6 +34,7 @@ class ApiExceptionHelper
             $this->throwable instanceof NotFoundHttpException => $this->dataNotFoundError(),
             $this->throwable instanceof TooManyRequestsHttpException => $this->tooManyRequestsError(),
             $this->throwable instanceof ValidationException => $this->validationError(),
+            $this->throwable instanceof CouldNotPerformTransition => $this->couldNotPerformTransitionError(),
             $this->throwable instanceof AuthenticationException => $this->authenticationError(),
             $this->throwable instanceof AuthorizationException, $this->throwable instanceof AccessDeniedHttpException, => $this->authorizationError(),
             $this->throwable instanceof CustomExceptionInterface => $this->customError($this->throwable),

@@ -19,7 +19,7 @@ class PostResource extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'images' => AttachmentResource::collection($this->whenLoaded('attachments')),
-            'status' => isset($this->status) ? $this->status->value : 'pending',
+            'status' => $this->status->getMorphClass(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

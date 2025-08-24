@@ -16,13 +16,12 @@ class UpdatePostRequest extends FormRequest implements HasDataTransferObjectInte
     public function rules(): array
     {
         return [
-            'title' => ['string'],
-            'description' => ['string'],
-            'price' => ['numeric'],
-            'user_id' => ['integer'],
-            'category_id' => ['integer'],
-            'images' => ['array'],
-            'images.*' => ['exists:attachments,id'],
+            'title' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'numeric'],
+            'category_id' => ['required', 'integer'],
+            'images' => ['required', 'array'],
+            'images.*' => ['required', 'exists:attachments,id'],
         ];
     }
 
@@ -33,7 +32,7 @@ class UpdatePostRequest extends FormRequest implements HasDataTransferObjectInte
             description: $this->input('description'),
             price: $this->input('price'),
             category_id: $this->input('category_id'),
-            images: $this->has('images') ? collect($this->input('images')) : null,
+            images: collect($this->input('images')),
         );
     }
 }

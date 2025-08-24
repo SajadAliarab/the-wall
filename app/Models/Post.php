@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PostStatusEnum;
+use App\Models\States\Post\PostStatus;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float $price
  * @property int $user_id
  * @property int $category_id
- * @property PostStatusEnum $status
+ * @property PostStatus|string $status
  * @property CarbonImmutable | null $created_at
  * @property CarbonImmutable | null $updated_at
  * @property CarbonImmutable | null $deleted_at
@@ -28,6 +29,20 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected function casts(): array
+    {
+        return [
+            'status' => PostStatus::class,
+            'price' => 'decimal:2',
+        ];
+    }
+
+    #[Scope]
+    protected function approved(Builder $query): void
+    {
+        $query->where('status', PostStatusEnum::APPROVED);
+    }
 
     public function user(): BelongsTo
     {
@@ -49,18 +64,5 @@ class Post extends Model
     {
         return $this->belongsToMany(Attachment::class, 'post_attachments')
             ->withTimestamps();
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'status' => PostStatusEnum::class,
-        ];
-    }
-
-    #[Scope]
-    protected function approved(Builder $query): void
-    {
-        $query->where('status', 'approved');
     }
 }

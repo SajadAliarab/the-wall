@@ -4,9 +4,9 @@ namespace App\Enums;
 
 enum PostStatusEnum: string
 {
-    case Pending = 'pending';
-    case Approved = 'approved';
-    case Rejected = 'rejected';
+    case PENDING = 'pending';
+    case APPROVED = 'approved';
+    case REJECTED = 'rejected';
 
     public static function toArray(): array
     {

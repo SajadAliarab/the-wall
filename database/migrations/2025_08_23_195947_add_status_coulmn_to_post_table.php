@@ -10,8 +10,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->enum('status', PostStatusEnum::toArray())
-                ->default(PostStatusEnum::Pending)
+            $table->string('status')
+                ->default(PostStatusEnum::PENDING)
                 ->after('category_id');
         });
     }
