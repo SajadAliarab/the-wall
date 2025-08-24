@@ -1,15 +1,8 @@
 <?php
 
 it('update user and return ok', function () {
-    $name = 'Test User';
-    $email = 'test@test.com';
-    $password = 'password';
-    $user = \App\Models\User::factory()->create([
-        'name' => $name,
-        'email' => $email,
-        'password' => $password,
-    ]);
-    $this->actingAs($user);
+
+    $this->actingAs(createUser());
 
     $response = $this->putJson(route('api.v1.users.update'), [
         'name' => 'New Name',
