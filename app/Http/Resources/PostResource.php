@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\PostStatusEnum;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,7 +19,7 @@ class PostResource extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'images' => AttachmentResource::collection($this->whenLoaded('attachments')),
-            'status' => $this->status?->value ?? 'pending',
+            'status' => isset($this->status) ? $this->status->value : 'pending',
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
