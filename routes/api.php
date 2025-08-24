@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\Attachment\UploadAttachmentController;
 use App\Http\Controllers\Api\V1\Auth\CreateTokenController;
 use App\Http\Controllers\Api\V1\Category\GetCategoryListController;
 use App\Http\Controllers\Api\V1\Post\CreatePostController;
+use App\Http\Controllers\Api\V1\Post\GetPostController;
 use App\Http\Controllers\Api\V1\Post\UpdatePostController;
 use App\Http\Controllers\Api\V1\User\CreateUserController;
 use App\Http\Controllers\Api\V1\User\UpdateUserController;
@@ -44,6 +45,7 @@ Route::name('api.')
                 Route::name('posts.')
                     ->prefix('posts')
                     ->group(function () {
+                        Route::get('/', GetPostController::class)->name('list');
                         Route::middleware('auth:sanctum')->group(function () {
                             Route::post('/', CreatePostController::class)->name('create');
                             Route::put('/{postId}', UpdatePostController::class)->name('update');
