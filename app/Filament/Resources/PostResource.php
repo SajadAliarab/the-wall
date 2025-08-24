@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\PostStatus;
+use App\Enums\PostStatusEnum;
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Attachment;
 use App\Models\Post;
@@ -55,9 +55,9 @@ class PostResource extends Resource
                     ->disabled(),
                 Forms\Components\Select::make('status')
                     ->options([
-                        PostStatus::Pending->value => 'Pending',
-                        PostStatus::Approved->value => 'Approved',
-                        PostStatus::Rejected->value => 'Rejected',
+                        PostStatusEnum::Pending->value => 'Pending',
+                        PostStatusEnum::Approved->value => 'Approved',
+                        PostStatusEnum::Rejected->value => 'Rejected',
                     ]),
             ]);
     }
@@ -88,20 +88,20 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn (Post $record): string => match ($record->status->value) {
-                        PostStatus::Pending->value => 'warning',
-                        PostStatus::Approved->value => 'success',
-                        PostStatus::Rejected->value => 'danger',
+                        PostStatusEnum::Pending->value => 'warning',
+                        PostStatusEnum::Approved->value => 'success',
+                        PostStatusEnum::Rejected->value => 'danger',
                     })
                     ->searchable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                        PostStatus::Pending->value => 'Pending',
-                        PostStatus::Approved->value => 'Approved',
-                        PostStatus::Rejected->value => 'Rejected',
+                        PostStatusEnum::Pending->value => 'Pending',
+                        PostStatusEnum::Approved->value => 'Approved',
+                        PostStatusEnum::Rejected->value => 'Rejected',
                     ])
-                    ->default(PostStatus::Pending->value),
+                    ->default(PostStatusEnum::Pending->value),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

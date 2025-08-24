@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObject\Post;
 
+use App\Enums\PostStatusEnum;
 use Illuminate\Support\Collection;
 
 class CreatePostDto

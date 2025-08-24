@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\PostStatus;
+use App\Enums\PostStatusEnum;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float $price
  * @property int $user_id
  * @property int $category_id
- * @property PostStatus $status
+ * @property PostStatusEnum $status
  * @property CarbonImmutable | null $created_at
  * @property CarbonImmutable | null $updated_at
  * @property CarbonImmutable | null $deleted_at
@@ -52,7 +52,7 @@ class Post extends Model
     protected function casts(): array
     {
         return [
-            'status' => PostStatus::class,
+            'status' => PostStatusEnum::class,
         ];
     }
 }
