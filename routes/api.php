@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Attachment\UploadAttachmentController;
 use App\Http\Controllers\Api\V1\Auth\CreateTokenController;
 use App\Http\Controllers\Api\V1\Category\GetCategoryListController;
+use App\Http\Controllers\Api\V1\Post\BoostPostByUserController;
 use App\Http\Controllers\Api\V1\Post\CreatePostController;
 use App\Http\Controllers\Api\V1\Post\GetPostListController;
 use App\Http\Controllers\Api\V1\Post\UpdatePostController;
@@ -49,6 +50,7 @@ Route::name('api.')
                         Route::middleware('auth:sanctum')->group(function () {
                             Route::post('/', CreatePostController::class)->name('create');
                             Route::put('/{post}', UpdatePostController::class)->name('update');
+                            Route::post('/boosts/{post}', BoostPostByUserController::class)->name('boost');
                         });
                     });
 

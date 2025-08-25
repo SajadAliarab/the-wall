@@ -10,4 +10,9 @@ class PostPendingStatus extends PostStatus
     {
         return true;
     }
+
+    public static function canBeBoosts(): bool
+    {
+        return false;
+    }
 }
