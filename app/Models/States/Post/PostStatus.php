@@ -26,4 +26,6 @@ abstract class PostStatus extends State
     }
 
     abstract public static function canBeDeleted(): bool;
+
+    abstract public static function canBeBoosts(): bool;
 }
