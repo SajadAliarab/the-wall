@@ -89,11 +89,12 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-//                    ->color(fn (Post $record): string => match ($record->status) {
-//                        PostPendingStatus::$name => 'warning',
-//                        PostApprovedStatus::$name => 'success',
-//                        PostRejectedStatus::$name => 'danger',
-//                    })
+                    ->color(fn (Post $record): string => match (true) {
+                        $record->status instanceof PostPendingStatus => 'warning',
+                        $record->status instanceof PostApprovedStatus => 'success',
+                        $record->status instanceof PostRejectedStatus => 'danger',
+                        default => 'gray',
+                    })
                     ->searchable(),
             ])
             ->filters([
@@ -104,6 +105,7 @@ class PostResource extends Resource
                         PostRejectedStatus::$name => 'Rejected',
                     ])
                     ->default(PostPendingStatus::$name),
+                    Tables\Filters\TrashedFilter::make()
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
