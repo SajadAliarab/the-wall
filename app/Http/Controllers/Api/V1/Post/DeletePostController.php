@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1\Post;
 
-use App\Http\Controllers\Controller;
-use App\Models\Post;
 use App\Actions\Api\V1\Post\DeletePostAction;
+use App\Http\Controllers\Api\ApiBaseController;
+use App\Models\Post;
 
-class DeletePostController extends Controller
+class DeletePostController extends ApiBaseController
 {
-    public function __invoke(Post$post ,DeletePostAction $action)
+    public function __invoke(Post $post, DeletePostAction $action)
     {
-        $delete = $action->handle($post);
+        $action->handle($post);
 
-        return response()->apiSuccess($delete);
+        return response()->apiSuccess();
 
     }
 }
