@@ -51,6 +51,8 @@ Route::name('api.')
                         Route::middleware('auth:sanctum')->group(function () {
                             Route::post('/', CreatePostController::class)->name('create');
                             Route::put('/{post}', UpdatePostController::class)->name('update');
+                            Route::delete('/{post}', DeletePostController::class)->name('delete');
+                            Route::post('/boosts/{post}', BoostPostByUserController::class)->name('boost');
                         });
                     });
 
