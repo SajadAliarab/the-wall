@@ -12,7 +12,7 @@ class DeletePostController extends Controller
     {
         $delete = $action->handle($post);
 
-        return response()->apiSuccess();
+        return response()->apiSuccess($delete);
 
     }
 }
