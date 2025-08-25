@@ -21,7 +21,7 @@ abstract class PostStatus extends State
                 [PostApprovedStatus::class, PostRejectedStatus::class],
 
                 // Rejected => Pending
-                [PostRejectedStatus::class, PostRejectedStatus::class],
+                [PostRejectedStatus::class, PostPendingStatus::class],
             ]);
     }
 
