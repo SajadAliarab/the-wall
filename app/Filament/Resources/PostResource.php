@@ -105,7 +105,7 @@ class PostResource extends Resource
                         PostRejectedStatus::$name => 'Rejected',
                     ])
                     ->default(PostPendingStatus::$name),
-                    Tables\Filters\TrashedFilter::make()
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
