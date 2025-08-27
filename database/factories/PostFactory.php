@@ -33,7 +33,8 @@ class PostFactory extends Factory
     {
         return $this->afterCreating(function (Post $post): void {
             $attachmentId = range(1, 5);
-            $randomAttachment = collect($attachmentId)->random(rand(1, 3));
+            $randomCount = $this->faker->numberBetween(1, 3);
+            $randomAttachment = collect($attachmentId)->random($randomCount);
             $post->attachments()->attach($randomAttachment);
 
         });
