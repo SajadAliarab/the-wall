@@ -12,7 +12,8 @@ class DeletePostController extends ApiBaseController
     {
         $action->handle($post);
 
-        return response()->apiSuccess();
-
+        return response()->apiSuccess(
+            messages: 'Post deleted successfully.',
+        );
     }
 }

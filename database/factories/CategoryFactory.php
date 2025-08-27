@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +22,7 @@ class CategoryFactory extends Factory
     {
         return $this->state(
             fn (array $attributes) => [
-                'parent_id' => \App\Models\Category::query()->inRandomOrder()->first()->id,
+                'parent_id' => Category::factory(),
             ]
         );
     }
@@ -31,6 +32,5 @@ class CategoryFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'parent_id' => null,
         ]);
-
     }
 }

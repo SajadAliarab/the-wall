@@ -13,9 +13,13 @@ class DeletePostAction
         throw_if($post->user_id !== auth()->user()->id, new AuthorizationException);
 
         throw_if(! $post->status->canBeDeleted(), 'In this Status you can not delete this post');
-        $user = auth()->user();
-        $user->notify(new DeletePostNotification);
 
-        return $post->delete();
+        $isPostDeleted = $post->delete();
+        if ($isPostDeleted) {
+            $user = auth()->user();
+            $user->notify(new DeletePostNotification);
+        }
+
+        return $isPostDeleted;
     }
 }

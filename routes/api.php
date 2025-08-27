@@ -52,7 +52,7 @@ Route::name('api.')
                             Route::post('/', CreatePostController::class)->name('create');
                             Route::put('/{post}', UpdatePostController::class)->name('update');
                             Route::delete('/{post}', DeletePostController::class)->name('delete');
-                            Route::post('/boosts/{post}', BoostPostByUserController::class)->name('boost');
+                            Route::post('/{post}/boost', BoostPostByUserController::class)->name('boost');
                         });
                     });
 

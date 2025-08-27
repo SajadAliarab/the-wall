@@ -11,7 +11,7 @@ class PostRejectedStatus extends PostStatus
         return false;
     }
 
-    public static function canBeBoosts(): bool
+    public static function canBeBoosted(): bool
     {
         return false;
     }

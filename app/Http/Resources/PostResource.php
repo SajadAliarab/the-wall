@@ -22,6 +22,7 @@ class PostResource extends JsonResource
             'status' => $this->status->getMorphClass(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'boosted_at' => $this->boosted_at,
         ];
     }
 }

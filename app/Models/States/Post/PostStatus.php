@@ -27,5 +27,12 @@ abstract class PostStatus extends State
 
     abstract public static function canBeDeleted(): bool;
 
-    abstract public static function canBeBoosts(): bool;
+    abstract public static function canBeBoosted(): bool;
+
+    public static function values(): array
+    {
+        return self::all()
+            ->keys()
+            ->toArray();
+    }
 }
