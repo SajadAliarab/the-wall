@@ -8,12 +8,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CategoryFactory extends Factory
 {
-    protected $model = Category::class;
-
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->word(),
+            'name' => fake()->unique()->word(),
             'created_at' => CarbonImmutable::now(),
             'updated_at' => CarbonImmutable::now(),
             'parent_id' => null,
@@ -23,15 +21,16 @@ class CategoryFactory extends Factory
     public function withParent(): CategoryFactory
     {
         return $this->state(
-            fn (array $attributes) =>[
-                'parent_id' => Category::inRandomOrder()->first()->id,
-            ]);
+            fn (array $attributes) => [
+                'parent_id' => \App\Models\Category::query()->inRandomOrder()->first()->id,
+            ]
+        );
     }
 
     public function root(): CategoryFactory
     {
         return $this->state(fn (array $attributes) => [
-            'parent_id' =>null ,
+            'parent_id' => null,
         ]);
 
     }
