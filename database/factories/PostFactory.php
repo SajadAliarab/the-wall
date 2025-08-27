@@ -2,12 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use App\Models\Post;
 use App\Models\States\Post\PostApprovedStatus;
 use App\Models\States\Post\PostPendingStatus;
 use App\Models\States\Post\PostRejectedStatus;
-use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
