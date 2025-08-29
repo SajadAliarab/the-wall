@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property int $id
@@ -23,6 +24,13 @@ class Category extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected static function booted(): void
+    {
+        self::saving(static function () {
+            Cache::forget('categories');
+        });
+    }
 
     public function parent(): BelongsTo
     {
