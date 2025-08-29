@@ -67,4 +67,12 @@ class Post extends Model
         return $this->belongsToMany(Attachment::class, 'post_attachments')
             ->withTimestamps();
     }
+
+    public function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class, 'category_attributes')
+            ->withPivot('value')
+            ->withTimestamps();
+    }
+
 }
