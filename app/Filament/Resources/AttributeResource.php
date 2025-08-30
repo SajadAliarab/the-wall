@@ -35,6 +35,8 @@ class AttributeResource extends Resource
                     ->relationship('categories', 'name')
                     ->columns(2)
                     ->searchable(),
+                Forms\Components\Checkbox::make('is_require')
+                    ->default(false),
 
             ]);
     }
@@ -53,6 +55,8 @@ class AttributeResource extends Resource
                     ->expandableLimitedList()
                     ->label('Used in Categories')
                     ->toggleable(),
+                Tables\Columns\ToggleColumn::make('is_require')
+                    ->label('Require'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

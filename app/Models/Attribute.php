@@ -24,6 +24,7 @@ class Attribute extends Model
     {
         return [
             'type'=> AttributeTypeEnum::class,
+            'is_require'=>'boolean',
         ];
     }
 
