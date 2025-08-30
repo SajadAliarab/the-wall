@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\AttributeTypeEnum;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Cache;
+
 
 /**
  * @property int $id
@@ -21,6 +19,13 @@ use Illuminate\Support\Facades\Cache;
 class Attribute extends Model
 {
     use HasFactory;
+
+    public function casts():array
+    {
+        return [
+            'type'=> AttributeTypeEnum::class,
+        ];
+    }
 
     public function categories(): BelongsToMany
     {

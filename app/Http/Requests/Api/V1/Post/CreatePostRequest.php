@@ -25,6 +25,7 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'images' => ['required', 'array'],
             'images.*' => ['required', 'exists:attachments,id'],
+            'attributes' => ['required', 'array'],
         ];
     }
 
