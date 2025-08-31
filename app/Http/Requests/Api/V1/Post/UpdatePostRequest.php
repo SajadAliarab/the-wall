@@ -4,7 +4,11 @@ namespace App\Http\Requests\Api\V1\Post;
 
 use App\Contracts\Requests\HasDataTransferObjectInterface;
 use App\DataTransferObject\Post\UpdatePostDto;
+use App\Models\Attribute;
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Validator;
 
 class UpdatePostRequest extends FormRequest implements HasDataTransferObjectInterface
 {
@@ -24,6 +28,53 @@ class UpdatePostRequest extends FormRequest implements HasDataTransferObjectInte
             'images.*' => ['required', 'exists:attachments,id'],
         ];
     }
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                $category = Category::query()->find($this->input('category_id'));
+
+                if (! $category) {
+                    $validator->errors()->add('category_id', 'Invalid category.');
+
+                    return;
+                }
+
+                // required attribute id
+                $required = $category->attributes
+                    ->where('pivot.is_require', true)
+                    ->pluck('id');
+
+                // provided attribute keys from the request
+                $provided = collect($this->input('attributes', []));
+
+                // add one error per missing attribute
+                $required->diff($provided->keys())
+                    ->each(
+                        fn (int $id): string => $validator->errors()->add('attributes', "Attribute '{$id}' is required")
+                    );
+                // Attributes type validation
+                /** @var Collection<int, Attribute> $attributes */
+                $attributes = $category->attributes;
+                $attributes->each(function (Attribute $attribute) use ($provided, $validator) {
+                    $type = $attribute->type;
+
+                    if ($provided->has($attribute->id)) {
+                        $value = [$provided->get($attribute->id)];
+                        $rules = [$attribute->type->validationType()];
+                        $validation = validator($value, $rules);
+                        if ($validation->fails()) {
+                            $validator->errors()->add(
+                                "attributes.{$attribute->id}",
+                                "Attribute '{$attribute->name}' must be of type {$attribute->type->value}"
+                            );
+                        }
+                    }
+                });
+            },
+        ];
+
+    }
 
     public function toDto(): UpdatePostDto
     {
@@ -33,6 +84,7 @@ class UpdatePostRequest extends FormRequest implements HasDataTransferObjectInte
             price: $this->input('price'),
             category_id: $this->input('category_id'),
             images: collect($this->input('images')),
+            attributes: collect($this->input('attributes')),
         );
     }
 }
