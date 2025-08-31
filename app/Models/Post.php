@@ -70,7 +70,7 @@ class Post extends Model
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'category_attributes')
+        return $this->belongsToMany(Attribute::class, 'post_attributes')
             ->withPivot('value')
             ->withTimestamps();
     }
