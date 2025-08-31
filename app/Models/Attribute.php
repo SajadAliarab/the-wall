@@ -24,12 +24,13 @@ class Attribute extends Model
     {
         return [
             'type'=> AttributeTypeEnum::class,
-            'is_require'=>'boolean',
         ];
     }
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'category_attributes');
+        return $this->belongsToMany(Category::class, 'category_attributes')
+            ->withPivot('is_require')
+            ->withTimestamps();
     }
 }
