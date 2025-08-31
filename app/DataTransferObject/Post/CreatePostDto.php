@@ -12,5 +12,6 @@ class CreatePostDto
         public float $price,
         public int $category_id,
         public Collection $images,
+        public Collection $attributes,
     ) {}
 }

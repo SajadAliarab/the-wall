@@ -10,4 +10,9 @@ class PostApprovedStatus extends PostStatus
     {
         return true;
     }
+
+    public static function canBeBoosted(): bool
+    {
+        return true;
+    }
 }

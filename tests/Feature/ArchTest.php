@@ -190,9 +190,9 @@ test('scopes must have apply method')
     ->expect('App\Models\Scopes')
     ->toHaveMethod('apply');
 
-test('states must have state suffix')
+test('states must have status suffix')
     ->expect('App\Models\States')
-    ->toHaveSuffix('State');
+    ->toHaveSuffix('Status');
 
 test('helpers must have helper suffix')
     ->expect('App\Support\Helpers')
