@@ -17,7 +17,7 @@ class AttributeResource extends JsonResource
             'id' => $attribute->id,
             'name' => $attribute->name,
             'type' => $attribute->type,
-            'value' => $attribute->pivot?->value,
+            'value' => $this->whenPivotLoaded('post_attributes', fn (): mixed => $attribute->pivot->value),
         ];
     }
 }

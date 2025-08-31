@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Attachment\UploadAttachmentController;
+use App\Http\Controllers\Api\V1\Attribute\GetAttributeByCategoryController;
 use App\Http\Controllers\Api\V1\Auth\CreateTokenController;
 use App\Http\Controllers\Api\V1\Category\GetCategoryListController;
 use App\Http\Controllers\Api\V1\Post\BoostPostByUserController;
@@ -65,5 +66,11 @@ Route::name('api.')
                         });
                     });
 
+                // Attributes
+                Route::name('attributes.')
+                    ->prefix('attributes')
+                    ->group(function () {
+                        Route::get('/{category}', GetAttributeByCategoryController::class)->name('list');
+                    });
             });
     });
