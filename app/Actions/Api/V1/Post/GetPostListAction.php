@@ -12,6 +12,7 @@ class GetPostListAction
         return Post::query()
             ->approved()
             ->with(['category', 'user', 'attachments'])
+            ->orderByRaw('COALESCE(boosted_at, created_at) DESC')
             ->orderByDesc('id')
             ->paginate();
     }

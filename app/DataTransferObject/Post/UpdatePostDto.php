@@ -12,6 +12,7 @@ class UpdatePostDto
         public float $price,
         public int $category_id,
         public Collection $images,
+        public Collection $attributes,
     ) {}
 
 }

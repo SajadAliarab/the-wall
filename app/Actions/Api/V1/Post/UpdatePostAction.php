@@ -25,6 +25,10 @@ class UpdatePostAction
 
             $post->attachments()->sync($dto->images);
 
+            $post->attributes()->sync(
+                $dto->attributes->map(fn (mixed $value): array => ['value' => $value])->toArray()
+            );
+
             $post->status->transitionTo(PostPendingStatus::class);
 
         } catch (Exception $exception) {
@@ -35,6 +39,6 @@ class UpdatePostAction
 
         DB::commit();
 
-        return $post->loadMissing('user', 'category', 'attachments');
+        return $post->loadMissing('user', 'category', 'attachments', 'attributes');
     }
 }

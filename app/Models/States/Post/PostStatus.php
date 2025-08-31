@@ -21,9 +21,18 @@ abstract class PostStatus extends State
                 [PostApprovedStatus::class, PostRejectedStatus::class],
 
                 // Rejected => Pending
-                [PostRejectedStatus::class, PostRejectedStatus::class],
+                [PostRejectedStatus::class, PostPendingStatus::class],
             ]);
     }
 
     abstract public static function canBeDeleted(): bool;
+
+    abstract public static function canBeBoosted(): bool;
+
+    public static function values(): array
+    {
+        return self::all()
+            ->keys()
+            ->toArray();
+    }
 }

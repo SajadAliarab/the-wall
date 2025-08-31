@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Attachment\UploadAttachmentController;
+use App\Http\Controllers\Api\V1\Attribute\GetAttributeByCategoryController;
 use App\Http\Controllers\Api\V1\Auth\CreateTokenController;
 use App\Http\Controllers\Api\V1\Category\GetCategoryListController;
+use App\Http\Controllers\Api\V1\Post\BoostPostByUserController;
 use App\Http\Controllers\Api\V1\Post\CreatePostController;
+use App\Http\Controllers\Api\V1\Post\DeletePostController;
 use App\Http\Controllers\Api\V1\Post\GetPostListController;
 use App\Http\Controllers\Api\V1\Post\UpdatePostController;
 use App\Http\Controllers\Api\V1\User\CreateUserController;
@@ -49,6 +52,8 @@ Route::name('api.')
                         Route::middleware('auth:sanctum')->group(function () {
                             Route::post('/', CreatePostController::class)->name('create');
                             Route::put('/{post}', UpdatePostController::class)->name('update');
+                            Route::delete('/{post}', DeletePostController::class)->name('delete');
+                            Route::post('/{post}/boost', BoostPostByUserController::class)->name('boost');
                         });
                     });
 
@@ -61,5 +66,11 @@ Route::name('api.')
                         });
                     });
 
+                // Attributes
+                Route::name('attributes.')
+                    ->prefix('attributes')
+                    ->group(function () {
+                        Route::get('/{category}', GetAttributeByCategoryController::class)->name('list');
+                    });
             });
     });
