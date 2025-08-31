@@ -12,11 +12,12 @@ class AttributeResource extends JsonResource
     public function toArray(Request $request): array
     {
         $attribute = $this->resource;
+
         return [
             'id' => $attribute->id,
             'name' => $attribute->name,
             'type' => $attribute->type,
-            'value'=>$attribute->pivot?->value,
+            'value' => $attribute->pivot?->value,
         ];
     }
 }

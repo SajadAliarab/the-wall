@@ -26,9 +26,8 @@ class CreatePostAction
 
             $post->attachments()->attach($dto->images);
             $post->attributes()->attach(
-                $dto->attributes->map(fn (mixed $value):array => ['value' => $value])->toArray()
+                $dto->attributes->map(fn (mixed $value): array => ['value' => $value])->toArray()
             );
-
 
         } catch (Throwable $th) {
             DB::rollBack();
@@ -38,6 +37,6 @@ class CreatePostAction
 
         DB::commit();
 
-        return $post->loadMissing('user', 'category', 'attachments','attributes');
+        return $post->loadMissing('user', 'category', 'attachments', 'attributes');
     }
 }
