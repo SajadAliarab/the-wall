@@ -4,8 +4,10 @@ namespace App\Http\Requests\Api\V1\Post;
 
 use App\Contracts\Requests\HasDataTransferObjectInterface;
 use App\DataTransferObject\Post\CreatePostDto;
+use App\Models\Attribute;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Validator;
 
 class CreatePostRequest extends FormRequest implements HasDataTransferObjectInterface
@@ -35,6 +37,7 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
 
                 if (! $category) {
                     $validator->errors()->add('category_id', 'Invalid category.');
+
                     return;
                 }
 
@@ -48,16 +51,19 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
 
                 // add one error per missing attribute
                 $required->diff($provided->keys())
-                    ->each(fn ($id) =>
-                    $validator->errors()->add('attributes', "Attribute '{$id}' is required")
+                    ->each(
+                        fn (int $id): string => $validator->errors()->add('attributes', "Attribute '{$id}' is required")
                     );
-                //Attributes type validation
-                $category->attributes->each( function ($attribute) use ($provided, $validator) {
+                // Attributes type validation
+                /** @var Collection<int, Attribute> $attributes */
+                $attributes = $category->attributes;
+                $attributes->each(function (Attribute $attribute) use ($provided, $validator) {
+                    $type = $attribute->type;
+
                     if ($provided->has($attribute->id)) {
                         $value = [$provided->get($attribute->id)];
-
                         $rules = [$attribute->type->validationType()];
-                        $validation = validator($value , $rules);
+                        $validation = validator($value, $rules);
                         if ($validation->fails()) {
                             $validator->errors()->add(
                                 "attributes.{$attribute->id}",
@@ -70,7 +76,6 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
         ];
 
     }
-
 
     public function toDto(): CreatePostDto
     {

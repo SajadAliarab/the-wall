@@ -74,5 +74,4 @@ class Post extends Model
             ->withPivot('value')
             ->withTimestamps();
     }
-
 }
