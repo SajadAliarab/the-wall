@@ -28,6 +28,7 @@ class UpdatePostRequest extends FormRequest implements HasDataTransferObjectInte
             'images.*' => ['required', 'exists:attachments,id'],
         ];
     }
+
     public function after(): array
     {
         return [

@@ -39,6 +39,6 @@ class UpdatePostAction
 
         DB::commit();
 
-        return $post->loadMissing('user', 'category', 'attachments','attributes');
+        return $post->loadMissing('user', 'category', 'attachments', 'attributes');
     }
 }
