@@ -6,7 +6,6 @@ use App\Contracts\Requests\HasDataTransferObjectInterface;
 use App\DataTransferObject\Post\CreatePostDto;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 
 class CreatePostRequest extends FormRequest implements HasDataTransferObjectInterface
@@ -25,7 +24,6 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'images' => ['required', 'array'],
             'images.*' => ['required', 'exists:attachments,id'],
-            'attributes' => ['required', 'array'],
         ];
     }
 
@@ -40,26 +38,37 @@ class CreatePostRequest extends FormRequest implements HasDataTransferObjectInte
                     return;
                 }
 
-                // required attribute names (lowercased, unique)
+                // required attribute id
                 $required = $category->attributes
-                    ->pluck('name')
-                    ->filter()
-                    ->map(fn ($n) => Str::lower($n))
-                    ->unique();
+                    ->where('pivot.is_require', true)
+                    ->pluck('id');
 
-                // provided attribute keys from the request (lowercased, unique)
-                $provided = collect($this->input('attributes', []))
-                    ->keys()
-                    ->map(fn ($n) => Str::lower($n))
-                    ->unique();
+                // provided attribute keys from the request
+                $provided = collect($this->input('attributes', []));
 
                 // add one error per missing attribute
-                $required->diff($provided)
-                    ->each(fn ($name) =>
-                    $validator->errors()->add('attributes', "Attribute '{$name}' is required")
-                );
+                $required->diff($provided->keys())
+                    ->each(fn ($id) =>
+                    $validator->errors()->add('attributes', "Attribute '{$id}' is required")
+                    );
+                //Attributes type validation
+                $category->attributes->each( function ($attribute) use ($provided, $validator) {
+                    if ($provided->has($attribute->id)) {
+                        $value = [$provided->get($attribute->id)];
+
+                        $rules = [$attribute->type->validationType()];
+                        $validation = validator($value , $rules);
+                        if ($validation->fails()) {
+                            $validator->errors()->add(
+                                "attributes.{$attribute->id}",
+                                "Attribute '{$attribute->name}' must be of type {$attribute->type->value}"
+                            );
+                        }
+                    }
+                });
             },
         ];
+
     }
 
 
