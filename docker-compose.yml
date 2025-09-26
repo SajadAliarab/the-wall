@@ -1,0 +1,43 @@
+networks:
+  thewall_network:
+    name: thewall_network
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: thewall_app
+    networks:
+      - thewall_network
+    restart: always
+    volumes:
+      - ./:/var/www
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mailhog
+
+  web:
+    image: nginx:stable-alpine3.21-perl
+    container_name: thewall_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - thewall_network
+    depends_on:
+      - app
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: thewall_mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - thewall_network
+
+
+
